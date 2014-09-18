@@ -1,5 +1,5 @@
 ;-------------------------------------------------------------------------------
-; MSP430 Assembler Code Template for use with TI Code Composer Studio
+; MSP430 Assembler Code Template for use with TI Code Composer Studios
 ;
 ;
 ;-------------------------------------------------------------------------------
