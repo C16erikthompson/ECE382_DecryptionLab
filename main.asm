@@ -29,9 +29,9 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
             ;
             ; load registers with necessary info for decryptMessage here
             ;
-            mov.w	#key,			r4
-            mov.w	#key,			r12
-            mov.w	#encrypted,		r5
+            mov.w	#key,			r4		;moves the used key to r4
+            mov.w	#key,			r12		;stores the original location of the key for reseting
+            mov.w	#encrypted,		r5		;moves location of encrypted message to r5
             mov.w	r5,				r9
             sub		r4,				r9		;message length in r9
 			mov		#decrypted,		r6
@@ -53,28 +53,28 @@ forever:    jmp     forever
 ;           the message by value.  Uses the decryptCharacter subroutine to decrypt
 ;           each byte of the message.  Stores theresults to the decrypted message
 ;           location.
-;Inputs:
-;Outputs:
-;Registers destroyed:
+;Inputs:r5,r8,r7,r6,r4
+;Outputs:r6
+;Registers destroyed:r6
 ;-------------------------------------------------------------------------------
 
 decryptMessage:
-			mov.b	@r5+,				r8
-			call	#decryptCharacter
-			dec		r7
-			cmp		#0,					r7
+			mov.b		@r5+,				r8		;move first part of encrypted message to r8, point at next part
+			call		#decryptCharacter				;decrypts
+			dec		r7						;checks to see if at end of key
+			cmp		#0,				r7
 			jz		resetKey
 contDecrypt:
-			mov.b	r8,					0(r6)
-			inc		r6
-			decd    r9
-			tst		r9
+			mov.b		r8,				0(r6)		;moves decrypted value to RAM
+			inc		r6						;points at next location in RAM
+			decd    	r9
+			tst		r9						;checks if at end of message3
 			jz		forever
 			jmp		decryptMessage
-            ret
+        		ret
 resetKey:
-			mov		#counter,					r7
-			mov.w	r12,				r4
+			mov		#counter,			r7		;resets the key back to the first byte
+			mov.w	r12,					r4
 			clrz
 			jmp		contDecrypt
 ;-------------------------------------------------------------------------------
@@ -83,13 +83,13 @@ resetKey:
 ;Function: Decrypts a byte of data by XORing it with a key byte.  Returns the
 ;           decrypted byte in the same register the encrypted byte was passed in.
 ;           Expects both the encrypted data and key to be passed by value.
-;Inputs:
-;Outputs:
-;Registers destroyed:
+;Inputs:r4,r8
+;Outputs:r8
+;Registers destroyed:r8
 ;-------------------------------------------------------------------------------
 
 decryptCharacter:
-			xor.b		@r4+,		r8
+			xor.b		@r4+,		r8				;xors r4 with r8, stores in r8, increments to next part of r4
             ret
 
 ;-------------------------------------------------------------------------------
