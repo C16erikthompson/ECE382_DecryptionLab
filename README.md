@@ -97,7 +97,7 @@ Discover a key to decrypt the given message
 
 The following image details my process and the solution:
 
-![](http://i47.photobucket.com/albums/f189/erik_thompson2/20140917_091353_zpsmd8xleuv.jpg?raw=true)
+![](http://i47.photobucket.com/albums/f189/erik_thompson2/20140922_111935_zpsdvmhbp1b.jpg?raw=true)
 
 When the discovered key (0x73be) is plugged in, the following message is produced
 
