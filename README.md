@@ -104,8 +104,7 @@ When the discovered key (0x73be) is plugged in, the following message is produce
 ![](http://i47.photobucket.com/albums/f189/erik_thompson2/Lab2A_zpsba4c5f55.png?raw=true)
 
 #Bugs
--If no key is provided, program would crash
--If the message is extremely long, there may not be enough space in RAM to display it
+	-If no key is provided, program would crash
+	-If the message is extremely long, there may not be enough space in RAM to display it
 #Documentation
 None
-#Documentation
